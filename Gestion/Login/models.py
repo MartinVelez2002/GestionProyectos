@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 # Create your models here.
 class Usuario(AbstractUser):
     rol = models.ForeignKey(Group, on_delete=models.PROTECT, related_name='rol', null=True)
+    cedula = models.CharField(max_length=10, default='')
     
     groups = models.ManyToManyField(
         Group,
@@ -21,7 +22,8 @@ class Usuario(AbstractUser):
         help_text='Specific permissions for this user.',
         verbose_name='user permissions'
     )
-    REQUIRED_FIELDS=['first_name', 'last_name']
     
     def __str__(self):
         return self.username
+    
+    

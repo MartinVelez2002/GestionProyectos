@@ -6,7 +6,7 @@
 
 .form{
     background-color: whitesmoke;
-    width: 400px;
+    width: clamp(250px, 50vw, 650px);
 }
 
 .form-label, .sect-regis{

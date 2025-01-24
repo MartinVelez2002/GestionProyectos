@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Roles.apps.RolesConfig',
     'Login.apps.LoginConfig',
     'Proyecto.apps.ProyectoConfig',
     'Sprint.apps.SprintConfig',
@@ -111,9 +112,9 @@ AUTH_USER_MODEL = 'Login.Usuario'
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-EC'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Guayaquil'
 
 USE_I18N = True
 
