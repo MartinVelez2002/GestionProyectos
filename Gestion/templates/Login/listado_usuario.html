@@ -1,0 +1,21 @@
+{% extends 'tablaBase.html' %}
+{% block thead %}
+<th>Rol</th>
+<th>Nombre(s)</th>
+<th>Apellido(s)</th>
+<th>Cédula</th>
+{% endblock %}
+{% block tbody %}
+{% for i in usuario %}
+<tr>
+    <td> {{i.rol}} </td>
+    <td> {{i.first_name}} </td>
+    <td> {{i.last_name}} </td>
+    <td> {{i.cedula}} </td>
+</tr>
+{% empty %}
+<tr>
+    <td>No hay usuarios registrados</td>
+</tr>
+{% endfor %}
+{% endblock %}

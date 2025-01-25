@@ -16,6 +16,8 @@ class UsuarioForm(BaseForm):
             'last_name': forms.TextInput(attrs={'placeholder':'Ingrese sus dos apellidos'}),
             'cedula': forms.NumberInput(attrs={'placeholder': 'Ingrese su cédula (XXXXXXXXX)'})
             }
+        
+    
     
     def clean(self):
         cleaned_data = super().clean()
