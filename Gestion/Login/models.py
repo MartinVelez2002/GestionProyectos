@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.core.exceptions import ValidationError
+from django.contrib.auth.hashers import make_password
 
-
-# Create your models here.
 class Usuario(AbstractUser):
     rol = models.ForeignKey(Group, on_delete=models.PROTECT, related_name='rol', null=True)
-    cedula = models.CharField(max_length=10, default='')
+    cedula = models.CharField(max_length=10, default='', unique=True)  # Asegura que la cédula sea única
     
     groups = models.ManyToManyField(
         Group,
@@ -24,6 +24,43 @@ class Usuario(AbstractUser):
     )
     
     def __str__(self):
-        return self.username
-    
-    
+        return f'{self.first_name} {self.last_name} rol: {self.rol}'
+
+    def clean_cedula(self):
+        cedula = self.cedula
+        
+        if not cedula.isdigit():
+            raise ValidationError('La cédula debe contener solo datos numéricos.')
+        
+
+        if len(cedula) != 10:
+            raise ValidationError('Cantidad de dígitos incorrecta.')
+
+        coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2]
+        total = 0
+        
+        for i in range(9):
+            digito = int(cedula[i])
+            coeficiente = coeficientes[i]
+            producto = digito * coeficiente
+            if producto > 9:
+                producto -= 9
+            total += producto
+        
+        digito_verificador = (total * 9) % 10
+        if digito_verificador != int(cedula[9]):
+            raise ValidationError('La cédula no es válida.')
+        
+        return cedula
+
+    def clean(self):
+        super().clean()
+        # Validación adicional: Asegura que la cédula sea única
+        if Usuario.objects.filter(cedula=self.cedula).exclude(pk=self.pk).exists():
+            raise ValidationError({'cedula': 'Este número de cédula ya está registrado.'})
+
+    def save(self, *args, **kwargs):
+        # Encripta la contraseña antes de guardar
+        if not self.pk or 'password' in kwargs:  # Si es un nuevo usuario o se cambió la contraseña
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)

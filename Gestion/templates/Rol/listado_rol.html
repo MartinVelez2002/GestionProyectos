@@ -3,12 +3,13 @@
 {% block thead %}
     <th>Nombre del Rol</th>
     <th>Permisos</th>
+    <th>Acciones</th>
 {% endblock %}
 
 {% block tbody %}
-    {% for i in rol %}
+    {% for role in rol %}
     <tr>
-        <td>{{ i.name }}</td>
+        <td>{{ role.name }}</td>
         <td>
             <!-- Botón para abrir el modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPermisos{{ forloop.counter }}">
@@ -20,19 +21,26 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel{{ forloop.counter }}">Permisos de {{ i.name }}</h5>
+                            <h5 class="modal-title" id="modalLabel{{ forloop.counter }}">Permisos de {{ role.name }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-
                             <div class="row">
-                                {% for permission in i.permissions.all %}
-                                    <div class="col-md-3 col-sm-6"> 
-                                        <p>{{ permission.name }}</p>
+                                {% for permission in role.permissions.all %}
+                                    <div class="col-md-4 col-sm-6 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-shield-alt fa-2x text-primary mb-3"></i>
+                                                <h6 class="card-title">
+                                                    {{ permission.name }}
+                                                </h6>
+                                                <p class="card-text text-muted small">{{ permission.codename }}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 {% empty %}
                                     <div class="col-12">
-                                        <p>No hay permisos asignados</p>
+                                        <p class="text-center text-muted">No hay permisos asignados</p>
                                     </div>
                                 {% endfor %}
                             </div>
@@ -44,10 +52,13 @@
                 </div>
             </div>
         </td>
+        <td>
+            <a class="btn btn-warning" href="{% url 'editarRol' role.pk %}">Editar</a>
+        </td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="2">No hay roles creados</td>
+        <td colspan="3" class="text-center text-muted">No hay roles creados</td>
     </tr>
     {% endfor %}
 {% endblock %}

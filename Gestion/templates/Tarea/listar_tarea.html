@@ -1,0 +1,21 @@
+{% extends 'tablaBase.html' %}
+
+{% block thead %}
+<th>Título</th>
+<th>Descripción</th>
+<th>Estado</th>
+
+{% endblock %}
+{% block tbody %}
+{% for i in tarea %}
+<tr >
+    <td>{{i.Titulo}}</td>
+    <td>{{i.Descripcion}}</td>
+    <td>{{ i.get_Estado_display }}</td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="3">No existen tareas creadas</td>
+</tr>
+{% endfor %}
+{% endblock %}

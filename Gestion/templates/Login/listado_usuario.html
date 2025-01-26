@@ -4,6 +4,7 @@
 <th>Nombre(s)</th>
 <th>Apellido(s)</th>
 <th>Cédula</th>
+<th>Acciones</th>
 {% endblock %}
 {% block tbody %}
 {% for i in usuario %}
@@ -12,10 +13,13 @@
     <td> {{i.first_name}} </td>
     <td> {{i.last_name}} </td>
     <td> {{i.cedula}} </td>
+    <td>
+        <a class="btn btn-warning" href="{% url 'editarUsuario' i.pk %}">Editar</a>
+    </td>
 </tr>
 {% empty %}
 <tr>
-    <td>No hay usuarios registrados</td>
+    <td colspan="5">No hay usuarios registrados</td>
 </tr>
 {% endfor %}
 {% endblock %}

@@ -25,8 +25,12 @@ class RolesForm(BaseForm):
         if any(char.isdigit() for char in name):
             raise ValidationError('No se pueden agregar números al campo.')
         
-        # Validación 3: El nombre del rol no debe existir previamente
-        if Group.objects.filter(name=name).exists():
-            raise ValidationError('Este nombre de rol ya existe.')
+        # Validación 3: El nombre del rol no debe existir previamente (excepto para la instancia actual)
+        if self.instance.pk:  # Si estamos editando una instancia existente
+            if Group.objects.filter(name=name).exclude(pk=self.instance.pk).exists():
+                raise ValidationError('Este nombre de rol ya existe.')
+        else:  # Si estamos creando un nuevo rol
+            if Group.objects.filter(name=name).exists():
+                raise ValidationError('Este nombre de rol ya existe.')
         
         return name

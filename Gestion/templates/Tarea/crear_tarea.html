@@ -1,0 +1,23 @@
+{% extends 'formulario.html' %} {% block form %}
+<h4 class="text-center">Tarea nueva</h4>
+<div class="m-2">
+  <div class="row">
+    <div class="col-12 mb-3">
+      <label class="form-label" for="username"> Título: </label>
+      <div class="input-group border-0 flex-nowrap">{{form.Titulo}}</div>
+    </div>
+    <div class="col-12 mb-3">
+      <label class="form-label" for="username"> Descripción: </label>
+      <div class="input-group border-0 flex-nowrap">{{form.Descripcion}}</div>
+    </div>
+    <div class="col-12 mb-3">
+      <label class="form-label" for="username"> Estado: </label>
+      <div class="input-group border-0 flex-nowrap">{{form.Estado}}</div>
+    </div>
+    <div class="col-12 mb-3">
+        <label class="form-label" for="username"> Equipo de Trabajo: </label>
+        <div class="input-group border-0 flex-nowrap">{{form.Personal}}</div>
+      </div>
+  </div>
+  {% endblock %}
+</div>

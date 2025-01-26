@@ -8,4 +8,4 @@ class Sprint(models.Model):
     Fecha_inicio = models.DateField(blank=True, null=False)
     Fecha_fin = models.DateField(blank=True, null=False)
     Proyecto = models.ForeignKey(Proyecto, on_delete=models.PROTECT)
-    Tarea = models.ForeignKey(Tarea, on_delete=models.PROTECT)
+    Tarea = models.ManyToManyField(Tarea)
