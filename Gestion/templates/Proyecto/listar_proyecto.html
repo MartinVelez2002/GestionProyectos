@@ -1,0 +1,25 @@
+{% extends 'tablaBase.html' %}
+{% block thead %}
+    <th>Nombre</th>
+    <th>Descripción</th>
+    <th>Fecha de inicio</th>
+    <th>Fecha fin</th>
+    <th>Gerente</th>
+    <th>Cliente(s)</th>
+{% endblock %}
+{% block tbody %}
+    {% for i in proyecto %}
+    <tr>
+        <td>{{ i.Nombre }}</td>
+        <td>{{ i.Descripcion }}</td>
+        <td>{{ i.Fecha_inicio }}</td>
+        <td>{{ i.Fecha_fin }}</td>
+        <td>{{ i.Gerente }}</td>
+        <td>{{ i.Cliente }}</td>
+    </tr>
+    {% empty %}
+        <tr>
+        <td colspan="6"> No hay proyectos </td>
+        </tr>
+    {% endfor %}
+{% endblock %}

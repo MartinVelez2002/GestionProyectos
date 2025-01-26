@@ -6,5 +6,5 @@ class Proyecto(models.Model):
     Descripcion = models.CharField(max_length=200, )
     Fecha_inicio = models.DateField(auto_now=False)
     Fecha_fin = models.DateField(auto_now=False)
-    Gerente = models.ForeignKey(Usuario, on_delete=models.PROTECT, related_name='gerente')
-    Cliente = models.ManyToManyField(Usuario, related_name='cliente')
+    Gerente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='gerente')
+    Cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='cliente')

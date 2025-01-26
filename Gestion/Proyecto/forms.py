@@ -1,6 +1,7 @@
 from django import forms
 from .models import Proyecto
 from Gestion.forms_util import BaseForm
+from Login.models import Usuario
 
 class ProyectoForm(BaseForm):
     class Meta:
@@ -12,11 +13,12 @@ class ProyectoForm(BaseForm):
             'Fecha_inicio': forms.DateInput(attrs={'type': 'date'}),
             'Fecha_fin': forms.DateInput(attrs={'type': 'date'}),
         }
-        labels = {
-            'Nombre': 'Nombre del Proyecto',
-            'Descripcion': 'Descripción',
-            'Fecha_inicio': 'Fecha de Inicio',
-            'Fecha_fin': 'Fecha de Fin',
-            'Gerente': 'Gerente del Proyecto',
-            'Cliente': 'Clientes Asociados',
-        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)  # Llama al __init__ de la clase padre
+        # Filtra los usuarios con el rol de "Cliente"
+        clientes = Usuario.objects.filter(rol__name='Cliente')
+        gerente = Usuario.objects.filter(rol__name='Gerente')
+        print("Usuarios filtrados:", clientes)  # Depuración
+        self.fields['Cliente'].queryset = clientes
+        self.fields['Gerente'].queryset = gerente

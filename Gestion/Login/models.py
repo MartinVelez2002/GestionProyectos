@@ -24,7 +24,7 @@ class Usuario(AbstractUser):
     )
     
     def __str__(self):
-        return f'{self.first_name} {self.last_name} rol: {self.rol}'
+        return f'{self.first_name} {self.last_name}'
 
     def clean_cedula(self):
         cedula = self.cedula

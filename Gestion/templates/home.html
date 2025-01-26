@@ -2,32 +2,132 @@
 <html lang="en">
 {% load static %}
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pantalla de Inicio</title>
-  <link rel="stylesheet" href="{% static 'css/form.css' %}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-  {% block css %}
-  {% endblock %}
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Proyectos</title>
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+    {% block css %}
+    {% endblock %}
 </head>
 
 <body class="vh-100 w-100">
-  <header>
-    {% include 'navbar.html' %}
-  </header>
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-secondary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">Gestión de Proyectos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav gap-2">
+                    <!-- Dropdown para Personal -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            Personal
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'register' %}">Crear un nuevo usuario</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listado_usuario' %}">Listado de usuarios</a></li>
+                        </ul>
+                    </div>
 
-  {% block content %}
+                    <!-- Dropdown para Roles -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            Roles
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'listRol' %}">Listado de Roles</a></li>
+                            <li><a class="dropdown-item" href="{% url 'createRol' %}">Crear un nuevo Rol</a></li>
+                        </ul>
+                    </div>
 
-  {% endblock %}
+                    <!-- Dropdown para Proyectos -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            Proyectos
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'createProject' %}">Crear Proyecto</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listProject' %}">Listado de Proyectos</a></li>
+                        </ul>
+                    </div>
 
-  {% block js %}
-  {% endblock %}
+                    <!-- Dropdown para Sprints -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            Sprints
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'createSprint' %}">Crear Sprint</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listSprint' %}">Listado de Sprints</a></li>
+                        </ul>
+                    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+                    <!-- Dropdown para Tareas -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            Tareas
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'crear_tarea' %}">Crear Tarea</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listado_tarea' %}">Listado de Tareas</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Enlace para Login -->
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Contenido principal -->
+<main class="container mt-4 px-5 shadow py-3">
+    {% block content %}
+        <div>
+            <h3>Proyectos</h3>
+            <hr>
+            <div class="d-flex flex-wrap justify-content-center gap-5">
+                {% for i in proyectos %}
+                <div class="card" style="width: 20rem;">
+                    <div class="card-body bg-light rounded">
+                        <h6 class="card-title text-center text-bg-primary rounded px-2 py-2">{{ i.Nombre }}</h6>
+                        <h6 class="card-subtitle mb-2 text-body-secondary"> <strong> Gerente: </strong> Pablito</h6>
+                        <h6 class="card-subtitle mb-2 text-body-secondary"> <strong> Cliente: </strong> Marco</h6>
+                        <div class="d-flex flex-column">
+                            <a id="ver" href="#">Ver Sprints</a>
+                            <a id="ver" href="#">Ver Tareas</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <h5> Aún no se han creado proyectos </h5>
+                {% endfor %}
+                <!-- Puedes agregar más cards aquí -->
+            </div>
+
+        </div>
+    {% endblock %}
+</main>
+
+<!-- Scripts de Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+{% block js %}
+    <!-- Scripts específicos de cada página -->
+{% endblock %}
 </body>
-
 </html>

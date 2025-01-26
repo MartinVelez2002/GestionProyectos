@@ -5,10 +5,18 @@ from .forms import UsuarioForm, EditUsuarioForm
 from .models import Usuario
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_not_required
-
+from Proyecto.models import Proyecto
 class HomeView(TemplateView):
     template_name = 'home.html'
 
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        # Agregar los proyectos al contexto
+        context['proyectos'] = Proyecto.objects.all()  # Obtener todos los proyectos
+        print(Proyecto.objects.all().values())
+        return context
 
 class UsuarioListView(ListView):
     template_name = 'Login/listado_usuario.html'
