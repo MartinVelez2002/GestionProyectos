@@ -16,9 +16,8 @@ class ProyectoForm(BaseForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  # Llama al __init__ de la clase padre
-        # Filtra los usuarios con el rol de "Cliente"
-        clientes = Usuario.objects.filter(rol__name='Cliente')
-        gerente = Usuario.objects.filter(rol__name='Gerente')
-        print("Usuarios filtrados:", clientes)  # Depuración
+
+        clientes = Usuario.objects.filter(groups__name='Cliente')
+        gerente = Usuario.objects.filter(groups__name='Gerente')
         self.fields['Cliente'].queryset = clientes
         self.fields['Gerente'].queryset = gerente

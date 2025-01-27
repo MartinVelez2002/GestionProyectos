@@ -11,7 +11,6 @@
         {% if form.errors %}
         <div id="erros" class="alert alert-danger">
             {% for field, errors in form.errors.items %}
-                {{field}}
                 {% for error in errors %}
                     {{ error }} 
                 {% endfor %} 
@@ -26,7 +25,7 @@
                 </button>
             </div>
             <div class="col-6">
-                <a href="{{ cancelar }}" class="btn btn-danger w-100">
+                <a href="{{ next }}" class="btn btn-danger w-100">
                     Cancelar
                 </a>
             </div>

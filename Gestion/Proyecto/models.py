@@ -8,3 +8,6 @@ class Proyecto(models.Model):
     Fecha_fin = models.DateField(auto_now=False)
     Gerente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='gerente')
     Cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='cliente')
+
+    def __str__(self):
+        return self.Nombre

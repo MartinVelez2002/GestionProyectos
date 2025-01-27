@@ -1,0 +1,61 @@
+{% extends 'home.html' %}
+{% block css %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <div class="container-fluid py-4">
+        <!-- Encabezado de la tarea -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="card-title mb-0">
+                    <i class="bi bi-card-checklist me-2"></i> Título de la tarea: {{ tarea.Titulo }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <!-- Detalles de la tarea -->
+                <div class="mb-3">
+                    <h5 class="fw-bold">Detalles de la Tarea</h5>
+                    <hr class="my-2">
+                    <p class="mb-1"><strong>Sprint:</strong> {{ tarea.Sprint }}</p>
+                    <p class="mb-1"><strong>Estado:</strong> {{ tarea.get_Estado_display }}</p>
+                    <p class="mb-0"><strong>Descripción:</strong> {{ tarea.Descripcion }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de comentarios -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h4 class="card-title mb-0">
+                    <i class="bi bi-chat-left-text me-2"></i>Comentarios
+                </h4>
+            </div>
+            <div class="card-body">
+                <!-- Lista de comentarios -->
+                <ul class="list-group list-group-flush">
+                    {% for comentario in comentarios %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ comentario.Personal.get_full_name }}</strong>
+                                    <small class="text-muted ms-2">{{ comentario.Fecha_creacion }}</small>
+                                </div>
+                            </div>
+                            <p class="mt-2 mb-0">{{ comentario.Comentario }}</p>
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item text-muted">No hay comentarios aún.</li>
+                    {% endfor %}
+                </ul>
+                <hr>
+                {% now "H:i - jS F Y " %}
+                <!-- Formulario para agregar un nuevo comentario -->
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    {{ formulario.Comentario }}
+                    <button class="btn btn-success my-2" type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

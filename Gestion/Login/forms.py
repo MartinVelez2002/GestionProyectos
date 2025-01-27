@@ -8,7 +8,7 @@ class UsuarioForm(BaseForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Repita la contraseña'}), label="Confirmar contraseña")  # Asegúrate de agregar este campo
     class Meta:
         model = Usuario
-        fields = ['rol', 'username', 'first_name', 'last_name', 'password', 'cedula']
+        fields = ['groups', 'username', 'first_name', 'last_name', 'password', 'cedula']
         widgets = {
             'password':forms.PasswordInput(attrs={'placeholder':'Ingrese una contraseña valida'}),
             'username':forms.TextInput(attrs={'placeholder':'Ingrese un nombre su usuario'}),
@@ -32,4 +32,4 @@ class UsuarioForm(BaseForm):
 class EditUsuarioForm(BaseForm):
     class Meta:
         model = Usuario
-        fields = ['rol', 'username', 'first_name', 'last_name', 'cedula']
+        fields = ['groups', 'username', 'first_name', 'last_name', 'cedula']

@@ -1,6 +1,9 @@
 from django.db import models
 from Login.models import Usuario
 from django.utils import timezone
+from Sprint.models import Sprint
+
+
 Estado = (('P','Pendiente'),('E', 'En proceso'), ('F', 'Finaizado'))
 # Create your models here.
 class Tarea(models.Model):
@@ -8,6 +11,7 @@ class Tarea(models.Model):
     Descripcion = models.CharField(max_length=300)
     Estado = models.CharField(max_length=1, choices=Estado, default=Estado[0][0])
     Personal = models.ManyToManyField(Usuario)
+    Sprint = models.ForeignKey(Sprint, on_delete=models.CASCADE, related_name='tareas', null=True, blank=True)
     
     def __str__(self):
         # Obtener los nombres completos de los usuarios relacionados

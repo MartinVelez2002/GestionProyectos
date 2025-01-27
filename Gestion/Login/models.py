@@ -4,15 +4,16 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
 
 class Usuario(AbstractUser):
-    rol = models.ForeignKey(Group, on_delete=models.PROTECT, related_name='rol', null=True)
-    cedula = models.CharField(max_length=10, default='', unique=True)  # Asegura que la cédula sea única
+    cedula = models.CharField(max_length=10, default='', unique=True)
     
-    groups = models.ManyToManyField(
+    groups = models.ForeignKey(
         Group,
         related_name='groupsUser', 
         blank=True,
         help_text='Rol de la persona',
-        verbose_name='groups'
+        verbose_name='groups',
+        on_delete=models.CASCADE,
+        null=True,
     )
     
     user_permissions = models.ManyToManyField(

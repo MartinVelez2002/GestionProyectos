@@ -6,6 +6,9 @@ from .models import Usuario
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_not_required
 from Proyecto.models import Proyecto
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
 class HomeView(TemplateView):
     template_name = 'home.html'
 
@@ -17,7 +20,9 @@ class HomeView(TemplateView):
         context['proyectos'] = Proyecto.objects.all()  # Obtener todos los proyectos
         print(Proyecto.objects.all().values())
         return context
-
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 class UsuarioListView(ListView):
     template_name = 'Login/listado_usuario.html'
     model = Usuario
@@ -25,7 +30,7 @@ class UsuarioListView(ListView):
 
     def get_queryset(self):
         # Filtra los usuarios excluyendo aquellos con rol None
-        return Usuario.objects.exclude(rol__isnull=True)
+        return Usuario.objects.exclude(groups__isnull=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
