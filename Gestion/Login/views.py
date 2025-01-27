@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from .forms import UsuarioForm, EditUsuarioForm
@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_not_required
 from Proyecto.models import Proyecto
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 class HomeView(TemplateView):
     template_name = 'home.html'
 

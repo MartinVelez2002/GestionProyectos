@@ -3,7 +3,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from .forms import RolesForm
 from django.contrib.auth.models import Group
 from django.urls import reverse_lazy
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 class RolesListView(ListView):
     template_name = 'Rol/listado_rol.html'

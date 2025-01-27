@@ -3,7 +3,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from .forms import TareaForm, ComentarioForm
 from .models import Tarea, Comentario
 from django.urls import reverse_lazy
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 # Create your views here.
 
@@ -48,10 +48,6 @@ class TareaUpdateView(UpdateView):
         context['cancelar'] = reverse_lazy('listado_tarea')
 
         return context
-
-
-from django.urls import reverse
-from django.shortcuts import get_object_or_404
 
 
 class TareaDetailView(DetailView):

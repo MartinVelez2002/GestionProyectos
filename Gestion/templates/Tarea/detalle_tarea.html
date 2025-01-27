@@ -34,18 +34,28 @@
                 <!-- Lista de comentarios -->
                 <ul class="list-group list-group-flush">
                     {% for comentario in comentarios %}
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <strong>{{ comentario.Personal.get_full_name }}</strong>
-                                    <small class="text-muted ms-2">{{ comentario.Fecha_creacion }}</small>
+                        <div class="d-flex gap-3">
+                            <li class="list-group-item w-100 my-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ comentario.Personal.get_full_name }}</strong>
+                                        <small class="text-muted ms-2">{{ comentario.Fecha_creacion }}</small>
+                                    </div>
                                 </div>
-                            </div>
-                            <p class="mt-2 mb-0">{{ comentario.Comentario }}</p>
-                        </li>
+                                <p class="mt-2 mb-0">{{ comentario.Comentario }}</p>
+                            </li>
+
+                            {% if comentario.Personal == request.user %}
+
+                                <i class="bi bi-pencil-fill btn btn-warning d-flex align-items-center"
+                                   data-bs-toggle="modal" data-bs-target="#editarComentarioModal"
+                                   data-id="{{ comentario.id }}" data-comentario="{{ comentario.Comentario }}"></i>
+                            {% endif %}
+                        </div>
                     {% empty %}
                         <li class="list-group-item text-muted">No hay comentarios aún.</li>
                     {% endfor %}
+
                 </ul>
                 <hr>
                 {% now "H:i - jS F Y " %}
@@ -55,6 +65,31 @@
                     {{ formulario.Comentario }}
                     <button class="btn btn-success my-2" type="submit">Enviar</button>
                 </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para editar comentario -->
+    <div class="modal fade" id="editarComentarioModal" tabindex="-1" aria-labelledby="editarComentarioModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarComentarioModalLabel">Editar Comentario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario de edición -->
+                    <form id="form-editar-comentario" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="comentario_id" id="comentario_id">
+                        <div class="mb-3">
+                            <label for="comentario_texto" class="form-label">Comentario</label>
+                            <textarea class="form-control" id="comentario_texto" name="comentario_texto"
+                                      rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -1,12 +1,10 @@
-from django.shortcuts import render
-
 from Sprint.models import Sprint
 from .forms import ProyectoForm
 from .models import Proyecto
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from Tarea.models import Tarea
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 class ProyectoCreateView(CreateView):
     template_name = 'Proyecto/crear_proyecto.html'
